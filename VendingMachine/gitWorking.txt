@@ -1,0 +1,5 @@
+git remote add origin https://eallen426:Escool426@github.com/eallen426/cosc442-allen
+-project3.git
+
+git remote set-url origin https://eallen426:Escool426@github.com/eallen426/cosc442-allen
+-project3.git

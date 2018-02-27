@@ -10,7 +10,6 @@ package edu.towson.cis.cosc442.project3.vendingmachine;
  * "A" for the slot at index 0, "B" for the slot at index 1, "C" for the slot at index 2, and "D"
  * for the slot at index 3.  
  */
-
 public class VendingMachine {
 
 	// The number of slots in the vending machine
@@ -37,15 +36,11 @@ public class VendingMachine {
 	// Error message for amounts < 0
 	private static final String INVALID_AMOUNT_MESSAGE = "Invalid amount.  Amount must be >= 0";
 	
-	// Error message for amounts < 0
-	private static final String INVALID_INCREMENT_MESSAGE = "Invalid amount. Must be in increments"
-			+ " of 1 cent";
+	// Slot part of error message
+	private static final String SLOT_MESSAGE = "Slot ";
 	
 	// Error message for insufficient funds
 	private static final String INSUFFICIENT_FUNDS_MESSAGE = "Insufficient funds.";
-	
-	// Slot part of error message
-	private static final String SLOT_MESSAGE = "Slot ";
 	
 	// Already occupied part of error message
 	private static final String ALREADY_OCCUPIED_MESSAGE = " already occupied";
@@ -67,7 +62,7 @@ public class VendingMachine {
 	public VendingMachine() {
 		itemArray = new VendingMachineItem[NUM_SLOTS];
 		for (int i = 0; i < NUM_SLOTS; i++) {
-				itemArray[1] = null;
+				itemArray[i] = null;
 		}
 		this.balance = INITIAL_BALANCE;
 	}
@@ -89,7 +84,7 @@ public class VendingMachine {
 		} else if ( code.equals(D_CODE)) {
 			return 3;
 		} else {
-			throw new VendingMachineException(INVALID_CODE_MESSAGE);
+			throw new VendingMachineException(VendingMachine.INVALID_CODE_MESSAGE);
 		}
 	}
 
@@ -139,10 +134,13 @@ public class VendingMachine {
 		int slotIndex = getSlotIndex(code);
 		VendingMachineItem item = itemArray[slotIndex];
 		itemArray[slotIndex] = null;
-		
+		if ( item == null) {
+			throw new VendingMachineException(SLOT_MESSAGE + code + IS_EMPTY_MESSAGE);
+		}
 		return item;
 	}
-
+	
+	
 	/**
 	 * Function to put money into the vending machine.  
 	 * Precondition: amount >= 0
@@ -151,9 +149,6 @@ public class VendingMachine {
 	 * @throws VendingMachineException Throws a VendingMachineException if the amount is < 0 
 	 */
 	public void insertMoney(double amount) throws VendingMachineException {
-		if(Math.abs(amount*100) < 1){
-			throw new VendingMachineException(INVALID_INCREMENT_MESSAGE);
-		}
 		if( amount < 0 )
 			throw new VendingMachineException(VendingMachine.INVALID_AMOUNT_MESSAGE);
 		this.balance += amount;
@@ -189,10 +184,11 @@ public class VendingMachine {
 			throw new VendingMachineException(INSUFFICIENT_FUNDS_MESSAGE);
 		}
 		
-
+		if(this.balance >= item.getPrice()) {
 			removeItem(code);
 			this.balance -= item.getPrice();
 			returnCode = true;
+		}
 		
 		return returnCode;
 	}
@@ -208,9 +204,4 @@ public class VendingMachine {
 		this.balance = 0;
 		return change;
 	}
-
-
 }
-
-
-

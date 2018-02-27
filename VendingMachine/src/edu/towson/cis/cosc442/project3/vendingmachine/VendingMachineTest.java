@@ -1,4 +1,4 @@
-package edu.towson.cis.cosc442.project2.vendingmachine;
+package edu.towson.cis.cosc442.project3.vendingmachine;
 
 import static org.junit.Assert.*;
 
@@ -195,7 +195,7 @@ public class VendingMachineTest {
 	@Test
 	public void testReturnChange() {
 		vendMachine.insertMoney(5.00);
-		assertEquals(5, vendMachine.getBalance(), .0001);
+		assertEquals(5, vendMachine.returnChange(), .0001);
 	}
 
 }

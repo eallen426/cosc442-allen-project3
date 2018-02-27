@@ -1,4 +1,4 @@
-package edu.towson.cis.cosc442.project2.vendingmachine;
+package edu.towson.cis.cosc442.project3.vendingmachine;
 
 
 /**
@@ -189,11 +189,11 @@ public class VendingMachine {
 			throw new VendingMachineException(INSUFFICIENT_FUNDS_MESSAGE);
 		}
 		
-		if(this.balance >= item.getPrice()) {
+		//if(this.balance >= item.getPrice()) {
 			removeItem(code);
 			this.balance -= item.getPrice();
 			returnCode = true;
-		}
+		//}
 		
 		return returnCode;
 	}
